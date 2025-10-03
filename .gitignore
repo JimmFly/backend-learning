@@ -110,6 +110,8 @@ out/
 *.sqlite
 *.sqlite3
 *.db
+*.db-shm
+*.db-wal
 
 # Backup files
 *.bak

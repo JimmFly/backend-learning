@@ -33,6 +33,9 @@
     </section>
     <header style="display: none">
       <h1 class="text-gradient">You have 0 open tasks.</h1>
+      <button style="display: none" onclick="logout()" id="logoutBtn">
+        <i class="fa-solid fa-right-from-bracket"></i>
+      </button>
     </header>
     <nav style="display: none" class="tab-container">
       <button onclick="changeTab('All')" class="tab-button selected-tab">
@@ -71,6 +74,7 @@
     const registerBtn = document.getElementById("registerBtn");
     const authBtn = document.getElementById("authBtn");
     const addTodoBtn = document.getElementById("addTodoBtn");
+    const logoutBtn = document.getElementById("logoutBtn");
     // const deleteBtn = document.getElementById('')
     // const updateBtn =
 
@@ -80,6 +84,7 @@
       header.style.display = "flex";
       main.style.display = "flex";
       authContent.style.display = "none";
+      logoutBtn.style.display = "block";
 
       await fetchTodos();
     }
@@ -253,18 +258,7 @@
       token = null;
       todos = [];
       localStorage.removeItem("token");
-      nav.style.display = "none";
-      header.style.display = "none";
-      main.style.display = "none";
-      authContent.style.display = "block";
-      email.value = "";
-      password.value = "";
-      isRegistration = false;
-      registerBtn.innerText = "Sign up";
-      document.querySelector("#auth > div h2").innerText = "Login";
-      document.querySelector(".register-content p").innerText =
-        "Don't have an account?";
-      document.querySelector(".register-content button").innerText = "Sign up";
+      window.location.reload();
     }
 
     // CRUD LOGIC
