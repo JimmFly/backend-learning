@@ -1,6 +1,6 @@
-import { DatabaseSync } from "node:sqlite";
+import Database from "better-sqlite3";
 
-const db = new DatabaseSync(":memory:");
+const db: Database.Database = new Database("todo.db");
 
 //Execute some SQL commands to set up a table
 db.exec(`

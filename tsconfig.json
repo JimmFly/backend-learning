@@ -8,12 +8,23 @@
     // Environment Settings
     // See also https://aka.ms/tsconfig/module
     "module": "nodenext",
+    "moduleResolution": "nodenext",
     "target": "esnext",
 
     // For nodejs:
     "lib": ["esnext"],
     "types": ["node"],
+    "composite": true,
     // and npm install -D @types/node
+
+    // Interop Constraints
+    "forceConsistentCasingInFileNames": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "rootDir": "./src",
+    "outDir": "./dist",
+    "tsBuildInfoFile": "./dist/tsconfig.tsbuildinfo",
 
     // Other Outputs
     "sourceMap": true,
@@ -40,5 +51,6 @@
     "noUncheckedSideEffectImports": true,
     "moduleDetection": "force",
     "skipLibCheck": true
-  }
+  },
+  "exclude": ["node_modules", "target", "dist", "lib"]
 }

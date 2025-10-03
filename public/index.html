@@ -195,7 +195,7 @@
         passVal.length < 6 ||
         !emailVal.includes("@")
       ) {
-        return;
+        throw new Error("Invalid credentials");
       }
 
       // reset error and set isAuthenticating to true
@@ -250,6 +250,21 @@
 
     function logout() {
       // wipe states and clear cached token
+      token = null;
+      todos = [];
+      localStorage.removeItem("token");
+      nav.style.display = "none";
+      header.style.display = "none";
+      main.style.display = "none";
+      authContent.style.display = "block";
+      email.value = "";
+      password.value = "";
+      isRegistration = false;
+      registerBtn.innerText = "Sign up";
+      document.querySelector("#auth > div h2").innerText = "Login";
+      document.querySelector(".register-content p").innerText =
+        "Don't have an account?";
+      document.querySelector(".register-content button").innerText = "Sign up";
     }
 
     // CRUD LOGIC
