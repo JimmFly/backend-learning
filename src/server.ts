@@ -1,70 +1,23 @@
 import express from "express";
+import path, { dirname } from "path";
+import { fileURLToPath } from "url";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Middleware to parse JSON bodies
-app.use(express.json());
+// Get the file path from the URL of the current module
+const __filename = fileURLToPath(import.meta.url);
+// Get the directory name of the current module
+const __dirname = dirname(__filename);
+// Path to the HTML file
+const pathToHtml = path.join(__dirname, "public", "index.html");
 
-// Mock data to be sent in responses
+// Middleware to serve static files from the 'public' directory
+app.use(express.static(path.join(__dirname, "../public")));
 
-const mockData: Array<{ name: string; message: string }> = [
-  {
-    name: "Sample Data",
-    message: "This is some data from the server.",
-  },
-];
-
-// Server Side Rendering (SSR) for the root route (Website endpoint)
+// Route to serve the HTML file
 app.get("/", (req, res) => {
-  console.log("Received a request at /", req.method);
-  res.status(201).send(`
-    <body style="background-color: #000000; color: #FFFFFF; font-family: Arial, sans-serif; text-align: center; margin-top: 50px;">
-      <h1>Data!</h1>
-      ${mockData.map((item) => `<p>${item.name}: ${item.message}</p>`).join("")}
-    </body>
-  `);
-});
-
-// API endpoint to get mock data
-app.get("/api/data", (req, res) => {
-  console.log("Received a request at /api/data", req.method);
-  res.json(mockData);
-});
-
-app.post("/api/data", (req, res) => {
-  console.log("Received a POST request at /api/data", req.body);
-  const { name, message } = req.body;
-  if (name && message) {
-    mockData.push({ name, message });
-    res.status(201).json({ message: "Data received successfully!" });
-  } else {
-    res.status(400).json({ message: "Invalid data format." });
-  }
-});
-
-app.put("/api/data", (req, res) => {
-  console.log("Received a PUT request at /api/data", req.body);
-  const { name, message } = req.body;
-  const item = mockData.find((item) => item.name === name);
-  if (item) {
-    item.message = message;
-    res.status(200).json({ message: "Data updated successfully!" });
-  } else {
-    res.status(404).json({ message: "Data not found." });
-  }
-});
-
-app.delete("/api/data", (req, res) => {
-  console.log("Received a DELETE request at /api/data", req.body);
-  const { name } = req.body;
-  const index = mockData.findIndex((item) => item.name === name);
-  if (index !== -1) {
-    mockData.splice(index, 1);
-    res.status(200).json({ message: "Data deleted successfully!" });
-  } else {
-    res.status(404).json({ message: "Data not found." });
-  }
+  res.sendFile(pathToHtml);
 });
 
 app.listen(PORT, () => {
