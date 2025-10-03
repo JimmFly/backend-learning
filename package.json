@@ -1,5 +1,5 @@
 {
-  "name": "test_1",
+  "name": "backend-learning",
   "version": "1.0.0",
   "description": "A full stack todo application with using a NodeJS backend, a SQLite database, and JWT authentication",
   "type": "module",
